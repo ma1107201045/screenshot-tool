@@ -17,7 +17,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("../../main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/main.fxml"));
         Scene scene = new Scene(root);
 
         KeyCodeCombination kcc = new KeyCodeCombination(KeyCode.A, KeyCodeCombination.CONTROL_DOWN, KeyCodeCombination.ALT_DOWN);//注册热键
