@@ -29,7 +29,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("截图工具");
+        primaryStage.setTitle("截图工具---胡晓雯专属版");
         primaryStage.show();
         Main.primaryStage = primaryStage;
     }
