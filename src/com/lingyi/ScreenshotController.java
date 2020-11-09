@@ -74,7 +74,6 @@ public class ScreenshotController {
             Main.primaryStage.show();
         });
         this.anchorPane.getChildren().addAll(button);
-
     }
 
     public void screenshot() {
