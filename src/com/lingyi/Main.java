@@ -30,7 +30,7 @@ public class Main extends Application {
         primaryStage.setResizable(false);
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setScene(scene);
-        primaryStage.setTitle("截图工具---胡晓雯专属版");
+        primaryStage.setTitle("截图工具");
         primaryStage.setOnCloseRequest(windowEvent -> ScreenshotController.list.forEach(Stage::close));//主窗口关闭则关闭所有的ImageView
         primaryStage.show();
         Main.primaryStage = primaryStage;
