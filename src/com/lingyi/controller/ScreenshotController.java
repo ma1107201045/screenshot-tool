@@ -132,6 +132,11 @@ public class ScreenshotController {
             imageView.setFitWidth(image.getWidth());
             imageView.setFitHeight(image.getHeight());
             imageView.setImage(image);
+            imageView.setOnMouseClicked(mouseEvent -> {
+                if (mouseEvent.getClickCount() == 2) {//双击关闭
+                    ((Stage) imageView.getScene().getWindow()).close();
+                }
+            });
 
             Scene scene = new Scene(root);//新建场景
             Stage stage = new Stage(StageStyle.UNDECORATED);//新建舞台
