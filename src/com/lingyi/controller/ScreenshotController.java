@@ -21,6 +21,8 @@ import javafx.stage.StageStyle;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScreenshotController {
     @FXML
@@ -33,6 +35,8 @@ public class ScreenshotController {
     private double newSceneX;
 
     private double newSceneY;
+
+    public static List<Stage> list = new ArrayList<>();
 
 
     public void setOldCoordinates(MouseEvent mouseEvent) {
@@ -96,7 +100,7 @@ public class ScreenshotController {
             ClipboardContent content = new ClipboardContent();
             content.putImage(wi);
             cb.setContent(content);
-            this.showImageView(wi);
+            this.showImageView(wi);//创建ImageView
         } catch (AWTException e) {
             e.printStackTrace();
         }
@@ -119,7 +123,10 @@ public class ScreenshotController {
             Scene scene = new Scene(root);//新建场景
             Stage stage = new Stage(StageStyle.UNDECORATED);//新建舞台
             stage.setScene(scene);
+            stage.setAlwaysOnTop(true);
             stage.show();
+            list.forEach(Stage::show);
+            list.add(stage);
         } catch (IOException e) {
             e.printStackTrace();
         }

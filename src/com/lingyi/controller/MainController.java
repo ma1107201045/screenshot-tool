@@ -17,6 +17,7 @@ public class MainController {
 
     public void showCaptureWindow() throws IOException {
         Main.primaryStage.hide();//隐藏主窗口
+        ScreenshotController.list.forEach(Stage::hide);//隐藏每一个创建的ImageView
         Parent root = FXMLLoader.load(MainController.class.getResource("/screenshot.fxml"));
         Scene scene = new Scene(root);//新建场景
         scene.setFill(null);
@@ -24,6 +25,7 @@ public class MainController {
         scene.getAccelerators().put(kcc, () -> {
             screenshotStage.close();
             Main.primaryStage.show();
+            ScreenshotController.list.forEach(Stage::show);
         });
         screenshotStage = new Stage(StageStyle.TRANSPARENT);//新建舞台
         screenshotStage.setTitle("正在截图...");

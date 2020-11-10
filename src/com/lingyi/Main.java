@@ -1,7 +1,7 @@
 package com.lingyi;
 
+import com.lingyi.controller.ScreenshotController;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -31,6 +31,7 @@ public class Main extends Application {
         primaryStage.setAlwaysOnTop(true);
         primaryStage.setScene(scene);
         primaryStage.setTitle("截图工具---胡晓雯专属版");
+        primaryStage.setOnCloseRequest(windowEvent -> ScreenshotController.list.forEach(Stage::close));//主窗口关闭则关闭所有的ImageView
         primaryStage.show();
         Main.primaryStage = primaryStage;
     }
