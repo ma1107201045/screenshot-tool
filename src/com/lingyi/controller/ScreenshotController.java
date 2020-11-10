@@ -1,19 +1,26 @@
-package com.lingyi;
+package com.lingyi.controller;
 
+import com.lingyi.Main;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.image.WritableImage;
-import javafx.scene.input.Clipboard;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class ScreenshotController {
     @FXML
@@ -89,7 +96,31 @@ public class ScreenshotController {
             ClipboardContent content = new ClipboardContent();
             content.putImage(wi);
             cb.setContent(content);
+            this.showImageView(wi);
         } catch (AWTException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void showImageView(Image image) {
+        Parent root;
+        try {
+            root = FXMLLoader.load(MainController.class.getResource("/imageView.fxml"));
+            AnchorPane anchorPane = (AnchorPane) root;
+            anchorPane.setPrefWidth(image.getWidth());
+            anchorPane.setPrefHeight(image.getHeight());
+
+            ImageView imageView = (ImageView) anchorPane.getChildren().get(0);
+            imageView.setFitWidth(image.getWidth());
+            imageView.setFitHeight(image.getHeight());
+            imageView.setImage(image);
+
+            Scene scene = new Scene(root);//新建场景
+            Stage stage = new Stage(StageStyle.UNDECORATED);//新建舞台
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
             e.printStackTrace();
         }
 

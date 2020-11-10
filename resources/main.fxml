@@ -3,7 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 <AnchorPane prefHeight="91.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.lingyi.MainController">
+            fx:controller="com.lingyi.controller.MainController">
     <children>
         <Button layoutX="28.0" layoutY="28.0" mnemonicParsing="false" onAction="#showCaptureWindow" prefHeight="35.0"
                 prefWidth="246.0" text="开始截图"/>
