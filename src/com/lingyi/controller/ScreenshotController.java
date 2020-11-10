@@ -1,6 +1,8 @@
 package com.lingyi.controller;
 
 import com.lingyi.Main;
+import com.lingyi.util.FileNameUtil;
+import com.sun.imageio.plugins.common.ImageUtil;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,11 +20,15 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ScreenshotController {
 
@@ -77,16 +83,12 @@ public class ScreenshotController {
     }
 
     public void setNewCoordinates(MouseEvent mouseEvent) {
-        double newSceneX = mouseEvent.getSceneX();
-        double newSceneY = mouseEvent.getSceneY();
-        double width = newSceneX - this.oldSceneX;
-        double height = newSceneY - this.oldSceneY;
-        if (width > 0.0 && height > 0.0) {//防止宽度高度等于0出错
-            this.imageWidth = width;
-            this.imageHeight = height;
+        this.imageWidth = Math.abs(mouseEvent.getSceneX() - this.oldSceneX);
+        this.imageHeight = Math.abs(mouseEvent.getSceneY() - this.oldSceneY);
+        if (!(imageWidth == 0.0 || imageHeight == 0.0)) {
             Button button = new Button("完成");
-            button.setLayoutX(newSceneX - 40.0);
-            button.setLayoutY(newSceneY);
+            button.setLayoutX(this.oldSceneX + this.imageWidth - 40.0);
+            button.setLayoutY(this.oldSceneY + this.imageHeight);
             button.setOnMouseClicked(mEvent -> {
                 MainController.screenshotStage.close();
                 this.screenshot();
@@ -130,9 +132,9 @@ public class ScreenshotController {
             imageView.setImage(image);
             imageView.setOnMouseClicked(mouseEvent -> {
                 if (mouseEvent.getClickCount() == 2) {//双击关闭
-                    Stage stage = ((Stage) imageView.getScene().getWindow());
-                    stage.close();
-                    list.remove(stage);
+                    this.closeImageView(imageView);
+                } else if (mouseEvent.getButton() == MouseButton.SECONDARY) {
+                    this.saveImage(image);
                 }
             });
 
@@ -147,5 +149,22 @@ public class ScreenshotController {
             e.printStackTrace();
         }
 
+    }
+
+    public void closeImageView(ImageView imageView) {
+        Stage stage = ((Stage) imageView.getScene().getWindow());
+        stage.close();
+        list.remove(stage);
+    }
+
+    public void saveImage(Image image) {
+        try {
+            String pathName = FileNameUtil.get();
+            File file = new File(pathName);
+            BufferedImage bImage = SwingFXUtils.fromFXImage(image, null);
+            ImageIO.write(bImage, "png", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
