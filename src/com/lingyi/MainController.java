@@ -21,7 +21,7 @@ public class MainController {
         Main.primaryStage.hide();//隐藏主窗口
         Parent root = FXMLLoader.load(MainController.class.getResource("/screenshot.fxml"));
         Scene scene = new Scene(root);//新建场景
-        scene.setFill(Paint.valueOf("#00000000"));
+        scene.setFill(null);
         KeyCodeCombination kcc = new KeyCodeCombination(KeyCode.ESCAPE);//注册热键
         scene.getAccelerators().put(kcc, () -> {
             screenshotStage.close();
