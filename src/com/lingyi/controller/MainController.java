@@ -35,5 +35,9 @@ public class MainController {
         screenshotStage.show();
     }
 
+    public void closeImageView() {
+        ScreenshotController.list.forEach(Stage::close);
+    }
+
 
 }
