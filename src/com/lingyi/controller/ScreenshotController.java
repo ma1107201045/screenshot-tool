@@ -25,8 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ScreenshotController {
-    @FXML
-    private AnchorPane anchorPane;
 
     private double oldSceneX;
 
@@ -36,11 +34,9 @@ public class ScreenshotController {
 
     private double imageHeight;
 
-    private double newSceneX;
-
-    private double newSceneY;
-
     public static List<Stage> list = new ArrayList<>();
+    @FXML
+    private AnchorPane anchorPane;
 
 
     public void setOldCoordinates(MouseEvent mouseEvent) {
@@ -81,16 +77,16 @@ public class ScreenshotController {
     }
 
     public void setNewCoordinates(MouseEvent mouseEvent) {
-        this.newSceneX = mouseEvent.getSceneX();
-        this.newSceneY = mouseEvent.getSceneY();
-        double width = this.newSceneX - this.oldSceneX;
-        double height = this.newSceneY - this.oldSceneY;
+        double newSceneX = mouseEvent.getSceneX();
+        double newSceneY = mouseEvent.getSceneY();
+        double width = newSceneX - this.oldSceneX;
+        double height = newSceneY - this.oldSceneY;
         if (width > 0.0 && height > 0.0) {//防止宽度高度等于0出错
             this.imageWidth = width;
             this.imageHeight = height;
             Button button = new Button("完成");
-            button.setLayoutX(this.newSceneX - 40.0);
-            button.setLayoutY(this.newSceneY);
+            button.setLayoutX(newSceneX - 40.0);
+            button.setLayoutY(newSceneY);
             button.setOnMouseClicked(mEvent -> {
                 MainController.screenshotStage.close();
                 this.screenshot();
@@ -104,7 +100,7 @@ public class ScreenshotController {
         Robot robot;
         try {
             robot = new Robot();
-            Rectangle rec = new Rectangle((int) this.oldSceneX, (int) this.oldSceneY, (int) (this.imageWidth), (int) (this.imageWidth));
+            Rectangle rec = new Rectangle((int) this.oldSceneX, (int) this.oldSceneY, (int) (this.imageWidth), (int) (this.imageHeight));
             BufferedImage bufferedImage = robot.createScreenCapture(rec);
             WritableImage wi = SwingFXUtils.toFXImage(bufferedImage, null);
             /* 获取系统剪切板 */
@@ -134,7 +130,9 @@ public class ScreenshotController {
             imageView.setImage(image);
             imageView.setOnMouseClicked(mouseEvent -> {
                 if (mouseEvent.getClickCount() == 2) {//双击关闭
-                    ((Stage) imageView.getScene().getWindow()).close();
+                    Stage stage = ((Stage) imageView.getScene().getWindow());
+                    stage.close();
+                    list.remove(stage);
                 }
             });
 
