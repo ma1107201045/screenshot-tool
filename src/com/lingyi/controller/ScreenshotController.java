@@ -49,9 +49,10 @@ public class ScreenshotController {
         this.oldSceneY = mouseEvent.getSceneY();
     }
 
+
     public void setBorder(MouseEvent mouseEvent) {
         this.anchorPane.getChildren().clear();
-        double width = Math.abs(mouseEvent.getSceneX() - this.oldSceneX);
+        double width = Math.abs(mouseEvent.getSceneX() - this.oldSceneX);//防止负数
         double height = Math.abs(mouseEvent.getSceneY() - this.oldSceneY);
 
         Label label = new Label(width + " × " + height);
@@ -73,7 +74,7 @@ public class ScreenshotController {
                 BorderStrokeStyle.SOLID,
                 BorderStrokeStyle.SOLID,
                 null,
-                new BorderWidths(3.0),
+                new BorderWidths(2.0),
                 null)));
         this.anchorPane.getChildren().addAll(label, area);
 
